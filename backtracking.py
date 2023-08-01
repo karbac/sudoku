@@ -1,3 +1,5 @@
+from colorama import init, Fore, Style
+init()
 #Prend en entrée un tableau de sudoku, un nombre, et un emplacement de case
 #Retourne Vrai si le nombre d'entrée peut être placé à cet emplacement en toute légalité
 #Retourne Faux dans le cas contraire
@@ -22,34 +24,40 @@ def find_empty(grid):
     return False
 
 #Prend un tableau de sudoku en entrée
-#Retourne la grille complétée et résolue avec la méthode du backtracking pas à pas
+#Retourne la grille complétée et résolue avec la méthode du backtracking
+#Retourne Faux si aucune solution n'est possible
 def solve(grid):
     empty_cell = find_empty(grid)
     if not empty_cell:
         return grid
     row, col = empty_cell
 
-    for n in range(1,10):
+    for n in range(1,10):   #On essaie chaque nombre de 1 à 9 sur les cases vides
         if is_valid(grid,n,row,col):
             grid[row][col] = n
 
-            if solve(grid):  #Appel récursif de la fonction
+            if solve(grid):  #Etape suivante, appel récursif de la fonction
                 return grid
 
-            grid[row][col] = 0
+            grid[row][col] = 0 #Si on arrive à une impasse, on continue à la boucle de l'étape précédente
     return False
 
+#Prend un tableau sudoku en entrée
+#Affiche la grille complète résolue
 def display_solved(grid):
-    BOLD = '\033[1m'
-    RESET = '\033[0m'
-    BG_RED = '\033[41m'
+    init()
     solved_grid = solve(grid)
+    if not solved_grid:
+        return "Pas de solution"
     for i in range(9):
         print()
         if i in (3,6):
             print()
         for j in range(9):
-            print(str(solved_grid[i][j]), end='')
+            if grid[i][j] == 0:
+                print(Fore.RED + Style.BRIGHT + str(solved_grid[i][j]) + Style.RESET_ALL, end='')
+            else:
+                print( solved_grid[i][j] , end='')
             if j in (2,5):
                 print(" ", end='')
 
