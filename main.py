@@ -1,7 +1,7 @@
 import backtracking as bt
 
 FILE_PATH = f"grids/{input('Entrez le nom du fichier : ')}"
-#FILE_PATH = 'sudoku4.txt'
+#FILE_PATH = 'grids/evilsudoku.txt'
 
 #Conversion du fichier texte en un tableau Python 9x9 d'entiers
 try:
