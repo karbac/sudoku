@@ -21,16 +21,16 @@ def find_empty(grid):
                 return i,j
     return False
 
-#Prend un tableau de sudoku en entrée
+#Prend un grille de sudoku en entrée
 #Retourne la grille complétée et résolue avec la méthode du backtracking
 #Retourne Faux si aucune solution n'est possible
 def solve(grid):
     empty_cell = find_empty(grid)
-    if not empty_cell:
+    if not empty_cell:  #Si la grille n'a plus de cases vides, c'est gagné
         return grid
     row, col = empty_cell
 
-    for n in range(1,10):   #On essaie chaque nombre de 1 à 9 sur les cases vides
+    for n in range(1,10):   #On essaie chaque nombre de 1 à 9 sur les cases vides, par force brute
         if is_valid(grid,n,row,col):
             grid[row][col] = n
 
