@@ -1,7 +1,7 @@
 import backtracking as bt
 
-#FILE_PATH = input('Entrez le nom ou chemin du fichier : ')
-FILE_PATH = 'evilsudoku.txt'
+FILE_PATH = f"grids/{input('Entrez le nom du fichier : ')}"
+#FILE_PATH = 'sudoku4.txt'
 
 #Conversion du fichier texte en un tableau Python 9x9 d'entiers
 try:
@@ -12,8 +12,18 @@ except FileNotFoundError as e:
     exit()
 grid = []
 for line in data:
-    row = [int(n) if n.isnumeric() else 0 for n in line.strip()] #0 représente une case vide
+    row = [int(n) if n.isnumeric() else '*' for n in line.strip()] #Une astérisque représente une case vide
     grid.append(row)
 
-#Appel de la fonction de résolution et d'affichage
-bt.display_solved(grid)
+#Affichage de la grille initiale et de la grille résolue
+
+print('*******  GRILLE INITIALE *******')
+bt.display_grid(grid)
+print('\n')
+
+if not bt.solve(grid):
+    print("Cette grille n'a pas de solution")
+    exit()
+
+print('*******  GRILLE RESOLUE *******')
+bt.display_grid(grid)

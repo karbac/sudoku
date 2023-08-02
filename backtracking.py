@@ -1,5 +1,3 @@
-from colorama import init, Fore, Style
-init()
 #Prend en entrée un tableau de sudoku, un nombre, et un emplacement de case
 #Retourne Vrai si le nombre d'entrée peut être placé à cet emplacement en toute légalité
 #Retourne Faux dans le cas contraire
@@ -19,7 +17,7 @@ def is_valid(grid, n, row, col):
 def find_empty(grid):
     for i in range(9):
         for j in range(9):
-            if grid[i][j] == 0:
+            if grid[i][j] == '*':
                 return i,j
     return False
 
@@ -36,29 +34,21 @@ def solve(grid):
         if is_valid(grid,n,row,col):
             grid[row][col] = n
 
-            if solve(grid):  #Etape suivante, appel récursif de la fonction
+            if solve(grid):  #Etape suivante avec l'appel récursif de la fonction
                 return grid
 
-            grid[row][col] = 0 #Si on arrive à une impasse, on continue à la boucle de l'étape précédente
+            grid[row][col] = '*' #Si on arrive à une impasse, on continue la boucle de l'étape précédente
     return False
 
-#Prend un tableau sudoku en entrée
-#Affiche la grille complète résolue
-def display_solved(grid):
-    init()
-    solved_grid = solve(grid)
-    if not solved_grid:
-        return "Pas de solution"
+#Affiche la grille dans le terminal au format sudoku
+def display_grid(grid):
     for i in range(9):
         print()
         if i in (3,6):
             print()
         for j in range(9):
-            if grid[i][j] == 0:
-                print(Fore.RED + Style.BRIGHT + str(solved_grid[i][j]) + Style.RESET_ALL, end='')
-            else:
-                print( solved_grid[i][j] , end='')
-            if j in (2,5):
-                print(" ", end='')
+                print(grid[i][j], end='')
+                if j in (2,5):
+                    print(" ", end='')
 
 
